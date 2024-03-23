@@ -153,36 +153,7 @@ class _HomeScreenUiState extends State<HomeScreenUi> {
                 ],
               ),
             );
-            //   BottomNavigationBar(
-            //   currentIndex: homeController.selectedIndex.value,
-            //   onTap: homeController.updateIndex,
-            //   items: const <BottomNavigationBarItem>[
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.home),
-            //       label: 'Home',
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.search),
-            //       label: 'Search',
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.insert_chart),
-            //       label: '',
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.notifications),
-            //       label: 'Notifications',
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.person),
-            //       label: 'Profile',
-            //     ),
-            //   ],
-            //   selectedItemColor: CustomColors.selectedIndicatorColor,
-            //   unselectedItemColor: Colors.grey,
-            //   backgroundColor: CustomColors.primaryColor,
-            //   type: BottomNavigationBarType.fixed,
-            // );
+            
     }),
     );
   }
