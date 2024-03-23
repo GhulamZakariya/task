@@ -62,7 +62,7 @@ class VideoDataWidget extends StatelessWidget {
                   height: 6,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: index == onboardingController.currentIndex.value
+                    color: index == homeController.currentIndex.value
                         ? CustomColors.priceColor
                         : CustomColors.whiteColor,
                   ),

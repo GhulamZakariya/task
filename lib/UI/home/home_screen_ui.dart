@@ -17,11 +17,19 @@ class HomeScreenUi extends StatefulWidget {
 
 class _HomeScreenUiState extends State<HomeScreenUi> {
   final PageController pageController = PageController();
+  final PageController imagePageController = PageController();
+
 
   void _loadVideo(int index) {
     if (index < homeController.homePageResponseModel.value.posts!.length) {
 
       debugPrint('Loading video $index');
+    }
+  }
+  void _loadImage(int index) {
+    if (index < homeController.homePageResponseModel.value.posts![index].images!.length) {
+
+      debugPrint('Loading image $index');
     }
   }
   Widget _buildNavItem(int index, IconData icon, String label) {
@@ -45,14 +53,13 @@ class _HomeScreenUiState extends State<HomeScreenUi> {
     );
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     homeController.getData();
-  }
 
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,28 +71,54 @@ class _HomeScreenUiState extends State<HomeScreenUi> {
               controller: pageController,
               scrollDirection: Axis.vertical,
               onPageChanged: (index) {
+                homeController.currentIndex.value=0;
                 _loadVideo(index + 1);
               },
               itemBuilder: (context, index) {
-
                 Posts post = homeController.homePageResponseModel.value.posts![index];
-                return
-                  Stack(
-                  children: [
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: VideoPlayerWidget(videoUrl: post.postVideo!)),
-                   const  TopStoriesBar(),
-                    VideoDataWidget(post: post,),
-                    RightActionBar(post: post,),
+                return PageView.builder(
+                    itemCount: post.images?.length,
+                    controller: imagePageController,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (imageIndex) {
+                      homeController.currentIndex.value=imageIndex;
+                      _loadImage(imageIndex + 1);
+                    },
+                    itemBuilder: (context, imageIndex){
+                      Images image = post.images![imageIndex];
+                      String checkImage = image.image!.split('.').last;
+                     //
+                      debugPrint('index .......... $index');
+                      debugPrint('imageIndex .......... $imageIndex');
+                  return
 
-                  ],
-                );
+                    Stack(
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child:
+                          checkImage.trim() =='jpg' ?
+                      Image.network("https://via.placeholder.com/350x150",fit: BoxFit.fill,)
+                              :
+                              
+                          VideoPlayerWidget(videoUrl: image.image!),
+                      ),
+                     const  TopStoriesBar(),
+                      VideoDataWidget(post: post,),
+                      RightActionBar(post: post,),
+
+                    ],
+                  );
+                  
+                });
+
+                
               },
             );
           }),
-          bottomNavigationBar: Obx((){
+          bottomNavigationBar:
+          Obx((){
             return Container(
               padding: const EdgeInsets.only(bottom: 30,top: 20),
               decoration:  BoxDecoration(
